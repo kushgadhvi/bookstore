@@ -17,7 +17,7 @@ public class JDBC {
         this.password = password;
     }
 
-    public List<Map<String, Object>> select(String query) {
+    public synchronized List<Map<String, Object>> select(String query) {
         List<Map<String, Object>> resultList = new ArrayList<>();
         ResultSet rs;
         Connection connection = null;
@@ -55,7 +55,7 @@ public class JDBC {
     ;
 
     
-    public boolean insert(String query) {
+    public synchronized boolean insert(String query) {
 
         Connection connection = null;
         Statement stmt = null;
@@ -87,7 +87,7 @@ public class JDBC {
         return isSuccess;
     }
 
-    public int insertGetId(String query) {
+    public synchronized int insertGetId(String query) {
     Connection connection = null;
     Statement stmt = null;
     int id = -1;
@@ -119,7 +119,7 @@ public class JDBC {
     return id;
 }
 
-    public boolean update(String query) {
+    public synchronized boolean update(String query) {
         Connection connection = null;
         Statement stmt = null;
         boolean isSuccess = false;
@@ -150,7 +150,7 @@ public class JDBC {
         return isSuccess;
     }
 
-    public boolean delete(String query) {
+    public synchronized boolean delete(String query) {
         Connection connection = null;
         Statement stmt = null;
         boolean isSuccess = false;

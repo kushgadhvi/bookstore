@@ -1,22 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package bookstore;
 
-import javax.swing.table.AbstractTableModel;
 
-/**
- *
- * @author luvga
- */
-public class BookTableModel extends AbstractTableModel {
+public class BookTableModel extends CustomTableModel {
 
-    private final Book[] data; // List to hold MyData objects
-    private final String[] columnNames = {"id", "bookname", "price", "author", "qunatity", "categoryname", "Edit", "Delete"};
-
+ 
     public BookTableModel(Book[] data) {
-        this.data = data;
+       super(data,new String[]{"id", "bookname", "price", "author", "qunatity", "categoryname", "Edit", "Delete"});
     }
 
     @Override
@@ -31,7 +20,7 @@ public class BookTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Book myData = data[rowIndex];
+        Book myData = (Book) data[rowIndex];
         return switch (columnIndex) {
             case 0 ->
                 myData.getId();

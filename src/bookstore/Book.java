@@ -8,26 +8,24 @@ package bookstore;
  *
  * @author luvga
  */
-public class Book {
+public class Book extends StoreItem {
 
-    private int id;
-    private String bookname;
-    private int price;
     private String author;
-    private int qunatity;
+    private int quantity;
     private String categoryname;
     private boolean selected;
 
     public Book(int id, String bookname, int price, String author, int qunatity, String categoryname) {
-        this.id = id;
+        super(id, bookname, price);
         this.bookname = bookname;
         this.price = price;
         this.author = author;
-        this.qunatity = qunatity;
+        this.quantity = qunatity;
         this.categoryname = categoryname;
         this.selected = false;
     }
 
+    @Override
     public int getId() {
         return id;
     }
@@ -44,6 +42,7 @@ public class Book {
         this.bookname = bookname;
     }
 
+    @Override
     public int getPrice() {
         return price;
     }
@@ -61,11 +60,11 @@ public class Book {
     }
 
     public int getQunatity() {
-        return qunatity;
+        return quantity;
     }
 
     public void setQunatity(int qunatity) {
-        this.qunatity = qunatity;
+        this.quantity = qunatity;
     }
 
     public String getCategoryname() {
@@ -83,7 +82,5 @@ public class Book {
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
-    
-   
 
 }

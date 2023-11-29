@@ -16,9 +16,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class UserPage extends javax.swing.JFrame {
 
     JDBC jdbc = new JDBC("jdbc:mysql://localhost:3306/bookstore", "root", "admin");
-    private static List<Map<String, Object>> userResult;
+    private static Map<String, Object> userResult;
 
-    public UserPage(List<Map<String, Object>> userResult) {
+    public UserPage(Map<String, Object> userResult) {
         initComponents();
         UserPage.userResult = userResult;
     }
@@ -447,7 +447,7 @@ public class UserPage extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
 
-        int userId = (int) userResult.get(0).get("ID");
+        int userId = (int) userResult.get("ID");
         String orderInsertQuery = "insert into bookstore.orders (userId,paymentInfo) values (" + userId + "," + '"' + paymentDeatils.getText() + '"' + ")";
         int orderId = jdbc.insertGetId(orderInsertQuery);
 
@@ -536,7 +536,7 @@ public class UserPage extends javax.swing.JFrame {
 
     private void orderListDialogWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_orderListDialogWindowActivated
 
-        int userId = (int) userResult.get(0).get("ID");
+        int userId = (int) userResult.get("ID");
         String query = "select ob.id as id,b.bookname,b.price ,ob.returnbook as returnStatus,o.paymentInfo as paymentInfo from bookstore.orders o inner join bookstore.orderstobookmapping ob on o.orderId = ob.orderId inner join bookstore.books b on ob.bookId = b.id inner join bookstore.category c on c.categoryId = b.bookCatagory inner join bookstore.userslogin u on u.ID = o.userId where u.id = " + userId + " and ob.returnbook = 0";
         System.out.println(query);
         List<Map<String, Object>> orderbookTableResult = jdbc.select(query);
@@ -593,7 +593,7 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_checkOrderButtonActionPerformed
 
     private void checkReturnButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_checkReturnButtonMouseClicked
-        int userId = (int) userResult.get(0).get("ID");
+        int userId = (int) userResult.get("ID");
         String query = "select ob.id as id,b.bookname,b.price ,ob.returnbook as returnStatus,o.paymentInfo as paymentInfo from bookstore.orders o inner join bookstore.orderstobookmapping ob on o.orderId = ob.orderId inner join bookstore.books b on ob.bookId = b.id inner join bookstore.category c on c.categoryId = b.bookCatagory inner join bookstore.userslogin u on u.ID = o.userId where u.id = " + userId + " and ob.returnbook = 1";
 
         List<Map<String, Object>> orderbookTableResult = jdbc.select(query);

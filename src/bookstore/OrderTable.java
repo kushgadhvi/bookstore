@@ -1,14 +1,11 @@
 package bookstore;
 
-import javax.swing.table.AbstractTableModel;
 
-public class OrderTable extends AbstractTableModel {
+public class OrderTable extends CustomTableModel {
 
-    private final Order[] data; // List to hold MyData objects
-    private final String[] columnNames = {"id", "bookname", "price", "paymentDeatils", "returnstatus"};
 
     public OrderTable(Order[] data) {
-        this.data = data;
+        super(data,new String[]{"id", "bookname", "price", "paymentDeatils", "returnstatus"});
     }
 
     @Override
@@ -28,7 +25,7 @@ public class OrderTable extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Order myData = data[rowIndex];
+        Order myData = (Order) data[rowIndex];
         return switch (columnIndex) {
             case 0 ->
                 myData.getId();

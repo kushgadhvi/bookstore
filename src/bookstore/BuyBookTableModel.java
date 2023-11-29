@@ -4,19 +4,16 @@
  */
 package bookstore;
 
-import javax.swing.table.AbstractTableModel;
-
 /**
  *
  * @author luvga
  */
-public class BuyBookTableModel extends AbstractTableModel {
+public class BuyBookTableModel extends CustomTableModel {
 
-    private final Book[] data; // List to hold MyData objects
-    private final String[] columnNames = {"id", "bookname", "price", "author", "categoryname", "Select Book"};
-
+  
     public BuyBookTableModel(Book[] data) {
-        this.data = data;
+
+        super((Book[]) data, new String[]{"id", "bookname", "price", "author", "categoryname", "Select Book"});
     }
 
     @Override
@@ -31,7 +28,7 @@ public class BuyBookTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Book myData = data[rowIndex];
+        Book myData = (Book) data[rowIndex];
         return switch (columnIndex) {
             case 0 ->
                 myData.getId();
@@ -44,7 +41,7 @@ public class BuyBookTableModel extends AbstractTableModel {
             case 4 ->
                 myData.getCategoryname();
             case 5 ->
-               myData.isSelected();
+                myData.isSelected();
             default ->
                 null;
         };
@@ -54,7 +51,7 @@ public class BuyBookTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         return columnNames[column];
     }
-    
+
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return columnIndex == 5;  // Only the checkbox column is editable
@@ -63,7 +60,8 @@ public class BuyBookTableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         if (columnIndex == 5) {
-            data[rowIndex].setSelected((Boolean) aValue);
+            Book book = (Book) data[rowIndex];
+            book.setSelected((Boolean) aValue);
             fireTableCellUpdated(rowIndex, columnIndex);
         }
     }

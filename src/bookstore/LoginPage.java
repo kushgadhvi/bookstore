@@ -235,20 +235,17 @@ public class LoginPage extends javax.swing.JFrame {
             return;
         }
         Map<String, Object> userDeatils = userResult.get(0);
+        User user;
         String userType = (String) userDeatils.get("UserType");
         if (covertIntoHash(passWordValue).equals(userDeatils.get("PasswordHash")) && "admin".equals(userType)) {
-            loginPage.setVisible(false);
-            AdminPage adminPage = new AdminPage();
-            adminPage.setVisible(true);
-            adminPage.setLocationRelativeTo(null);
-            adminPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.setVisible(false);
+            user = new Admin(userDeatils);
+            user.openUserPage();
 
         } else if (covertIntoHash(passWordValue).equals(userDeatils.get("PasswordHash")) && "user".equals(userType)) {
-            loginPage.setVisible(false);
-            UserPage userPage = new UserPage(userResult);
-            userPage.setVisible(true);
-            userPage.setLocationRelativeTo(null);
-            userPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.setVisible(false);
+            user = new RegularUser(userDeatils);
+            user.openUserPage();
 
         } else {
             JOptionPane.showMessageDialog(this, "Wrong Password");
