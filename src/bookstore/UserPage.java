@@ -1,6 +1,8 @@
 package bookstore;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +23,10 @@ public class UserPage extends javax.swing.JFrame {
     public UserPage(Map<String, Object> userResult) {
         initComponents();
         UserPage.userResult = userResult;
+        buyBookTable.getTableHeader().setBackground(Color.decode("#006699"));
+        buyBookTable.getTableHeader().setForeground(Color.white);
+        buyBookTable.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 14));
+        buyBookTable.setDefaultRenderer(Object.class, new GrayCellRenderer());
     }
 
     Book[] books;
@@ -222,6 +228,7 @@ public class UserPage extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel1.setText("Online Bookstore");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Enter Book Name");
 
         selectCatagory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -237,6 +244,7 @@ public class UserPage extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Select Category");
 
         buyBookTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -257,6 +265,7 @@ public class UserPage extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(buyBookTable);
 
+        jButton1.setBackground(new java.awt.Color(51, 255, 102));
         jButton1.setText("Procced To Checkout");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -276,10 +285,18 @@ public class UserPage extends javax.swing.JFrame {
             }
         });
 
+        searchBook.setBackground(new java.awt.Color(51, 102, 255));
+        searchBook.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        searchBook.setForeground(new java.awt.Color(255, 255, 255));
         searchBook.setText("Search  Book");
         searchBook.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 searchBookMouseClicked(evt);
+            }
+        });
+        searchBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBookActionPerformed(evt);
             }
         });
 
@@ -301,14 +318,11 @@ public class UserPage extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(searchBookInput, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchBookInput, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jButton1)
                             .addGroup(layout.createSequentialGroup()
@@ -356,27 +370,39 @@ public class UserPage extends javax.swing.JFrame {
 
     }//GEN-LAST:event_searchBookInputActionPerformed
 
+
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
+        List<Map<String, Object>> categoryList = getCategoryList();
+        populateCategoryDropDown(categoryList);
+        List<Map<String, Object>> bookTableResult = getBookTableResult();
+        populateBookTable(bookTableResult);
+        setupBookTableRendererAndEditor();
+        
+    }
+
+    private synchronized List<Map<String, Object>> getCategoryList() {
         String catQuery = "select * from bookstore.category order by categoryName asc";
-        List<Map<String, Object>> categoryList = jdbc.select(catQuery);
+        return jdbc.select(catQuery);
+    }
+
+    private void populateCategoryDropDown(List<Map<String, Object>> categoryList) {
         DefaultComboBoxModel<String> dropDownmodel = new DefaultComboBoxModel<>();
         dropDownmodel.addElement("All");
-
-        for (Map<String, Object> categoryList1 : categoryList) {
-            dropDownmodel.addElement((String) categoryList1.get("categoryName"));
+        for (Map<String, Object> category : categoryList) {
+            dropDownmodel.addElement((String) category.get("categoryName"));
         }
-
         selectCatagory.setModel(dropDownmodel);
+    }
 
+    private synchronized List<Map<String, Object>> getBookTableResult() {
         String query = "SELECT book.id as id, bookname as bookname, price as price,author as author ,categoryname as categoryname FROM bookstore.books book inner join bookstore.category cat on book.bookCatagory = cat.categoryId where book.qunatity > 0 order by cat.categoryName asc, book.bookname asc";
+        return jdbc.select(query);
+    }
 
-        List<Map<String, Object>> bookTableResult = jdbc.select(query);
-
+    private void populateBookTable(List<Map<String, Object>> bookTableResult) {
         int rowLength = bookTableResult.size();
-
         books = new Book[rowLength];
-
         for (int i = 0; i < rowLength; i++) {
             Map<String, Object> tempRowData = bookTableResult.get(i);
             int id = (int) tempRowData.get("id");
@@ -386,10 +412,11 @@ public class UserPage extends javax.swing.JFrame {
             String categoryname = (String) tempRowData.get("categoryName");
             books[i] = new Book(id, bookname, price, author, 1, categoryname);
         }
-
         BuyBookTableModel booktableModel = new BuyBookTableModel(books);
         buyBookTable.setModel(booktableModel);
+    }
 
+    private void setupBookTableRendererAndEditor() {
         final JCheckBox checkBox = new JCheckBox();
         buyBookTable.getColumn("Select Book").setCellRenderer(new DefaultTableCellRenderer() {
             @Override
@@ -397,10 +424,9 @@ public class UserPage extends javax.swing.JFrame {
                 checkBox.setSelected(((Boolean) value));
                 return checkBox;
             }
-
         });
-
         buyBookTable.getColumn("Select Book").setCellEditor(new DefaultCellEditor(checkBox));
+
     }//GEN-LAST:event_formWindowOpened
 
     private void buyBookTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buyBookTableMouseClicked
@@ -521,6 +547,7 @@ public class UserPage extends javax.swing.JFrame {
         buyBookTable.setModel(booktableModel);
 
         final JCheckBox checkBox = new JCheckBox();
+
         buyBookTable.getColumn("Select Book").setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -551,13 +578,12 @@ public class UserPage extends javax.swing.JFrame {
             int price = (int) tempRowData.get("price");
             String returnStatusStr = (String) tempRowData.get("returnStatus");
             int returnStatus = "true".equalsIgnoreCase(returnStatusStr) ? 1 : 0;
-
             oderList[i] = new Order(id, bookname, price, returnStatus, paytDeatils);
         }
 
         OrderTable booktableModel = new OrderTable(oderList);
         orderTable.setModel(booktableModel);
-        ButtonRenderer buttonRenderer = new ButtonRenderer();
+        ButtonRenderer buttonRenderer = new ButtonRenderer(Color.red);
         ButtonEditor buttonEditor = new ButtonEditor(new JCheckBox());
         orderTable.getColumn("returnstatus").setCellRenderer(buttonRenderer);
         orderTable.getColumn("returnstatus").setCellEditor(buttonEditor);
@@ -624,11 +650,15 @@ public class UserPage extends javax.swing.JFrame {
         loginPage.setVisible(true);
     }//GEN-LAST:event_jButton3MouseClicked
 
-    public static void main(String args[]) {
+    private void searchBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBookActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchBookActionPerformed
 
+    public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
             new UserPage(userResult).setVisible(true);
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

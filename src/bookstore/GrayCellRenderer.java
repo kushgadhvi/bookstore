@@ -6,28 +6,21 @@ package bookstore;
 
 import java.awt.Color;
 import java.awt.Component;
-import javax.swing.JButton;
+import java.awt.Font;
 import javax.swing.JTable;
-import javax.swing.table.TableCellRenderer;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
  * @author luvga
  */
-public class ButtonRenderer extends JButton implements TableCellRenderer {
-
-    Color colour;
-
-    public ButtonRenderer(Color colour) {
-        setOpaque(true);
-        this.colour = colour;
-    }
+class GrayCellRenderer extends DefaultTableCellRenderer {
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        setText((value == null) ? "" : value.toString());
-        setBackground(colour); // 
-        return this;
+        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        c.setBackground(Color.decode("#CCCCCC"));
+        c.setFont(new Font("SansSerif", Font.BOLD, 12));
+        return c;
     }
-
 }

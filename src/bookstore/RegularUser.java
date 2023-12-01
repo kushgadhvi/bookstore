@@ -1,5 +1,6 @@
 package bookstore;
 
+import java.awt.Color;
 import java.util.Map;
 import javax.swing.JFrame;
 
@@ -15,5 +16,6 @@ public class RegularUser extends User {
         userPage.setVisible(true);
         userPage.setLocationRelativeTo(null);
         userPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        userPage.getContentPane().setBackground(Color.decode("#C8C497"));
     }
 }

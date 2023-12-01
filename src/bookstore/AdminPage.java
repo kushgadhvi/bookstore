@@ -1,5 +1,7 @@
 package bookstore;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.util.List;
 import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
@@ -11,11 +13,17 @@ public class AdminPage extends javax.swing.JFrame {
 
     JDBC jdbc = new JDBC("jdbc:mysql://localhost:3306/bookstore", "root", "admin");
     public static AdminPage adminPage;
+
     public AdminPage() {
+
         initComponents();
-//        adminPage = new AdminPage();
-//        adminPage.setLocationRelativeTo(null);
-//        adminPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        EditbookDialog.getContentPane().setBackground(Color.decode("#C8C497"));
+        AddbookDialog.getContentPane().setBackground(Color.decode("#C8C497"));
+        bookTable.getTableHeader().setBackground(Color.decode("#006699"));
+        bookTable.getTableHeader().setForeground(Color.white);
+        bookTable.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 14));
+        bookTable.setDefaultRenderer(Object.class, new GrayCellRenderer());
+
     }
 
     @SuppressWarnings("unchecked")
@@ -78,6 +86,9 @@ public class AdminPage extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setBackground(new java.awt.Color(51, 255, 102));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Add Book");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -147,20 +158,26 @@ public class AdminPage extends javax.swing.JFrame {
                 .addGap(38, 38, 38))
         );
 
+        EditbookDialog.setBackground(new java.awt.Color(51, 255, 102));
         EditbookDialog.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 EditbookDialogWindowOpened(evt);
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("BookName");
 
+        Catagory1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Catagory1.setText("Category");
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Price");
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("Author");
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setText("Quantity");
 
         bookNameEditInput.addActionListener(new java.awt.event.ActionListener() {
@@ -169,6 +186,8 @@ public class AdminPage extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(51, 255, 102));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Edit Book");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -183,6 +202,7 @@ public class AdminPage extends javax.swing.JFrame {
 
         categoryEditDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setText("Id");
 
         idEditInput.addActionListener(new java.awt.event.ActionListener() {
@@ -277,6 +297,9 @@ public class AdminPage extends javax.swing.JFrame {
             }
         });
 
+        addBookButton.setBackground(new java.awt.Color(51, 255, 102));
+        addBookButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        addBookButton.setForeground(new java.awt.Color(255, 255, 255));
         addBookButton.setText("Add Book");
         addBookButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -295,6 +318,7 @@ public class AdminPage extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        bookTable.setGridColor(new java.awt.Color(0, 0, 0));
         bookTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bookTableMouseClicked(evt);
@@ -302,8 +326,12 @@ public class AdminPage extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(bookTable);
 
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel11.setText("Search Books");
 
+        signOutButton.setBackground(new java.awt.Color(51, 102, 255));
+        signOutButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        signOutButton.setForeground(new java.awt.Color(255, 255, 255));
         signOutButton.setText("Signout");
         signOutButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -315,22 +343,19 @@ public class AdminPage extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchBook, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51)))
+                        .addGap(18, 18, 18)
+                        .addComponent(searchBook, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(addBookButton, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(signOutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(signOutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addBookButton, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -338,18 +363,19 @@ public class AdminPage extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(signOutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
+                        .addComponent(signOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addBookButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(searchBook, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel11)))
-                .addGap(18, 18, 18)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(addBookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(searchBook, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -384,12 +410,15 @@ public class AdminPage extends javax.swing.JFrame {
 
         BookTableModel booktableModel = new BookTableModel(books);
         bookTable.setModel(booktableModel);
-        ButtonRenderer buttonRenderer = new ButtonRenderer();
+        ButtonRenderer buttonRenderer = new ButtonRenderer(Color.decode("#FFCCCC"));
         ButtonEditor buttonEditor = new ButtonEditor(new JCheckBox());
+        ButtonRenderer buttonRenderer1 = new ButtonRenderer(Color.red);
+        ButtonEditor buttonEditor1 = new ButtonEditor(new JCheckBox());
         bookTable.getColumn("Edit").setCellRenderer(buttonRenderer);
         bookTable.getColumn("Edit").setCellEditor(buttonEditor);
-        bookTable.getColumn("Delete").setCellRenderer(buttonRenderer);
-        bookTable.getColumn("Delete").setCellEditor(buttonEditor);
+        bookTable.getColumn("Delete").setCellRenderer(buttonRenderer1);
+        bookTable.getColumn("Delete").setCellEditor(buttonEditor1);
+
     }//GEN-LAST:event_formWindowOpened
 
     private void addBookButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBookButtonMouseClicked
@@ -447,18 +476,24 @@ public class AdminPage extends javax.swing.JFrame {
 
         switch (colName) {
             case "Edit" -> {
-
-                String catQuery = "select * from bookstore.category;";
-                List<Map<String, Object>> categoryList = jdbc.select(catQuery);
+                List<Map<String, Object>> categoryList;
+                synchronized (this) {
+                    String catQuery = "select * from bookstore.category;";
+                    categoryList = jdbc.select(catQuery);
+                }
+                
                 DefaultComboBoxModel<String> dropDownmodel = new DefaultComboBoxModel<>();
                 for (Map<String, Object> categoryList1 : categoryList) {
                     dropDownmodel.addElement((String) categoryList1.get("categoryName"));
                 }
                 categoryEditDropDown.setModel(dropDownmodel);
 
-                String query = "SELECT book.id as id, bookname as bookname, price as price,author as author ,qunatity as qunatity,categoryname as categoryname FROM bookstore.books book inner join bookstore.category cat on book.bookCatagory = cat.categoryId where book.id = " + id;
-
-                List<Map<String, Object>> editBooksDetails = jdbc.select(query);
+                List<Map<String, Object>> editBooksDetails;
+                
+                synchronized (this) {
+                    String query = "SELECT book.id as id, bookname as bookname, price as price,author as author ,qunatity as qunatity,categoryname as categoryname FROM bookstore.books book inner join bookstore.category cat on book.bookCatagory = cat.categoryId where book.id = " + id;
+                    editBooksDetails = jdbc.select(query);
+                }
 
                 Map<String, Object> editBook = editBooksDetails.get(0);
 
@@ -491,6 +526,7 @@ public class AdminPage extends javax.swing.JFrame {
                     JOptionPane.showConfirmDialog(this, "Error Please Try Again");
                 }
             }
+            
             default -> {
 
             }
@@ -570,12 +606,13 @@ public class AdminPage extends javax.swing.JFrame {
 
         BookTableModel booktableModel = new BookTableModel(books);
         bookTable.setModel(booktableModel);
-        ButtonRenderer buttonRenderer = new ButtonRenderer();
+        ButtonRenderer buttonRenderer = new ButtonRenderer(Color.decode("#FFCCCC"));
         ButtonEditor buttonEditor = new ButtonEditor(new JCheckBox());
+        ButtonRenderer buttonRenderer1 = new ButtonRenderer(Color.red);
 
         bookTable.getColumn("Edit").setCellRenderer(buttonRenderer);
         bookTable.getColumn("Edit").setCellEditor(buttonEditor);
-        bookTable.getColumn("Delete").setCellRenderer(buttonRenderer);
+        bookTable.getColumn("Delete").setCellRenderer(buttonRenderer1);
         bookTable.getColumn("Delete").setCellEditor(buttonEditor);
 
     }//GEN-LAST:event_searchBookKeyPressed
@@ -588,12 +625,9 @@ public class AdminPage extends javax.swing.JFrame {
         loginPage.setVisible(true);
     }//GEN-LAST:event_signOutButtonMouseClicked
 
-
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
-// adminPage = new AdminPage();
-//        adminPage.setLocationRelativeTo(null);
-//        adminPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         });
     }
 
@@ -632,4 +666,5 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JTextField searchBook;
     private javax.swing.JButton signOutButton;
     // End of variables declaration//GEN-END:variables
+
 }

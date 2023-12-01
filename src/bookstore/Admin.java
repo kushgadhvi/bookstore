@@ -1,5 +1,6 @@
 package bookstore;
 
+import java.awt.Color;
 import java.util.Map;
 import javax.swing.JFrame;
 
@@ -15,5 +16,6 @@ public class Admin extends User {
         adminPage.setVisible(true);
         adminPage.setLocationRelativeTo(null);
         adminPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        adminPage.getContentPane().setBackground(Color.decode("#C8C497"));
     }
 }
