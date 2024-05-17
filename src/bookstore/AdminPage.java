@@ -390,9 +390,9 @@ public class AdminPage extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
         String query = "SELECT book.id as id, bookname as bookname, price as price,author as author ,qunatity as qunatity,categoryname as categoryname FROM bookstore.books book inner join bookstore.category cat on book.bookCatagory = cat.categoryId order by cat.categoryName asc, book.bookname asc";
-
+    
         List<Map<String, Object>> bookTableResult = jdbc.select(query);
-
+        System.out.println(bookTableResult);
         int rowLength = bookTableResult.size();
 
         Book[] books = new Book[rowLength];

@@ -12,9 +12,4 @@ public abstract class LoginUsers {
  
 }
 
-class Admin extends LoginUsers {
-}
 
-class User extends LoginUsers {
-
-}

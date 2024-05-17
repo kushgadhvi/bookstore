@@ -64,6 +64,9 @@ public class UserPage extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         checkoutDialog.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                checkoutDialogWindowClosed(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 checkoutDialogWindowOpened(evt);
             }
@@ -468,11 +471,12 @@ public class UserPage extends javax.swing.JFrame {
 
         CheckoutBooktable booktableModel = new CheckoutBooktable(selectedBooks);
         checkoutTable.setModel(booktableModel);
+        paymentDeatils.setText("");
 
     }//GEN-LAST:event_checkoutDialogWindowOpened
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-
+          
         int userId = (int) userResult.get("ID");
         String orderInsertQuery = "insert into bookstore.orders (userId,paymentInfo) values (" + userId + "," + '"' + paymentDeatils.getText() + '"' + ")";
         int orderId = jdbc.insertGetId(orderInsertQuery);
@@ -485,6 +489,7 @@ public class UserPage extends javax.swing.JFrame {
             boolean updateBookEecute = jdbc.update(updateBookQuery);
             if (orderBookMappingInsert == false || updateBookEecute == false) {
                 JOptionPane.showMessageDialog(this, "Error While Creating Order");
+                return;
             }
         }
         checkoutDialog.setVisible(false);
@@ -585,8 +590,8 @@ public class UserPage extends javax.swing.JFrame {
         orderTable.setModel(booktableModel);
         ButtonRenderer buttonRenderer = new ButtonRenderer(Color.red);
         ButtonEditor buttonEditor = new ButtonEditor(new JCheckBox());
-        orderTable.getColumn("returnstatus").setCellRenderer(buttonRenderer);
-        orderTable.getColumn("returnstatus").setCellEditor(buttonEditor);
+        orderTable.getColumn("DisableUser").setCellRenderer(buttonRenderer);
+        orderTable.getColumn("DisableUser").setCellEditor(buttonEditor);
     }//GEN-LAST:event_orderListDialogWindowActivated
 
     private void orderTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTableMouseClicked
@@ -653,6 +658,10 @@ public class UserPage extends javax.swing.JFrame {
     private void searchBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBookActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchBookActionPerformed
+
+    private void checkoutDialogWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_checkoutDialogWindowClosed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkoutDialogWindowClosed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {

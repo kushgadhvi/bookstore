@@ -271,38 +271,6 @@ public class LoginPage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    // Code on click for login button
-    private void LoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginMouseClicked
-
-        String userNameValue = userName.getText();
-        String passWordValue = new String(password.getPassword());
-
-        String query = "Select * from userslogin where username = " + '"' + userNameValue + '"';
-
-        List<Map<String, Object>> userResult = jdbc.select(query);
-        if (userResult.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "User Dose not exist");
-            return;
-        }
-        Map<String, Object> userDeatils = userResult.get(0);
-        User user;
-        String userType = (String) userDeatils.get("UserType");
-        if (covertIntoHash(passWordValue).equals(userDeatils.get("PasswordHash")) && "admin".equals(userType)) {
-            this.setVisible(false);
-            user = new Admin(userDeatils);
-            user.openUserPage();
-           
-
-        } else if (covertIntoHash(passWordValue).equals(userDeatils.get("PasswordHash")) && "user".equals(userType)) {
-            this.setVisible(false);
-            user = new RegularUser(userDeatils);
-            user.openUserPage();
-
-        } else {
-            JOptionPane.showMessageDialog(this, "Wrong Password");
-        }
-    }//GEN-LAST:event_LoginMouseClicked
-
     private void signUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpMouseClicked
 
         signUpDialog.pack();
@@ -343,11 +311,43 @@ public class LoginPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_createUserButtonMouseClicked
 
+    // Code on click for login button
+    private void LoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginMouseClicked
+
+        String userNameValue = userName.getText();
+        String passWordValue = new String(password.getPassword());
+
+        String query = "Select * from userslogin where username = " + '"' + userNameValue + '"';
+
+        List<Map<String, Object>> userResult = jdbc.select(query);
+        System.out.println(userResult);
+        if (userResult.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "User Dose not exist");
+            return;
+        }
+        Map<String, Object> userDeatils = userResult.get(0);
+        User user;
+        String userType = (String) userDeatils.get("UserType");
+
+        if (covertIntoHash(passWordValue).equals(userDeatils.get("PasswordHash")) && "admin".equals(userType)) {
+            this.setVisible(false);
+            user = new Admin(userDeatils);
+            user.openUserPage();
+
+        } else if (covertIntoHash(passWordValue).equals(userDeatils.get("PasswordHash")) && "user".equals(userType)) {
+            this.setVisible(false);
+            user = new RegularUser(userDeatils);
+            user.openUserPage();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Wrong Password");
+        }
+    }//GEN-LAST:event_LoginMouseClicked
+
     public static LoginPage loginPage;
- 
-    
+
     public static void main(String args[]) {
-        
+
         java.awt.EventQueue.invokeLater(() -> {
             loginPage = new LoginPage();
             loginPage.setLocationRelativeTo(null);

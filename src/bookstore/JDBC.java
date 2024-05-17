@@ -16,7 +16,8 @@ public class JDBC {
         this.user = user;
         this.password = password;
     }
-
+    
+    
     public synchronized List<Map<String, Object>> select(String query) {
         List<Map<String, Object>> resultList = new ArrayList<>();
         ResultSet rs;
