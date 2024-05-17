@@ -33,6 +33,7 @@ Now you should be able to build and run the project in NetBeans with MySQL Conne
 ## Contributors
 
 - [Luv Gadhvi](https://github.com/luvgadhvi)
+- [Kush Gadhvi](https://github.com/kushgadhvi)
 
 Feel free to contribute to this project by forking and creating pull requests. If you encounter any issues or have suggestions for improvement, please open an issue on GitHub.
 
